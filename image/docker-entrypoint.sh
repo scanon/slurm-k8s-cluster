@@ -65,6 +65,8 @@ then
     ulimit -s unlimited
     ulimit -n 131072
     ulimit -a
+    echo "---> Trying to create cgroup slice ..."
+    mkdir /sys/fs/cgroup/system.slice/ || echo "Failed to create slice. Cgroup/v2 may fail"
 
     start_munge
 

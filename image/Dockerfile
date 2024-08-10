@@ -49,6 +49,8 @@ RUN set -ex \
        apptainer \
        ondemand \
        kubectl \
+       dbus-devel \
+       libbpf-devel \
     && yum clean all \
     && rm -rf /var/cache/yum
 
