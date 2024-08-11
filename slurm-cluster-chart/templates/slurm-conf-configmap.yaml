@@ -1,8 +1,9 @@
+---
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: {{ .Values.configmaps.slurmConf }}
 data:
-  slurm.conf: |
-    {{- .Files.Get "files/slurm.conf" | nindent 4 -}}
-    
+  cgroup.conf: {{ .Files.Get "files/cgroup.conf" | quote}}
+  slurm.conf: {{ .Files.Get "files/slurm.conf" | quote}}
+

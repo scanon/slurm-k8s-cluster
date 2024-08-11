@@ -1,9 +1,13 @@
-slurmImage: ghcr.io/stackhpc/slurm-docker-cluster:1f51003
+slurmImage: nersc/k8s-slurm:23.02
 
 login:
   # Deployment resource name
   name: login
   replicas: 1
+  ports:
+     ssh: 2022
+     http: 9080
+     https: 9443
 
 slurmd:
   # StatefulSet resource name
