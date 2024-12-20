@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app.kubernetes.io/name: slurm
+    app.kubernetes.io/component: ceapi
+  name: ceapi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: slurm
+      app.kubernetes.io/component: ceapi
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app.kubernetes.io/name: slurm
+        app.kubernetes.io/component: ceapi
+    spec:
+      containers:
+        - image: {{ .Values.ceapi.image }}
+          name: ceapi
+          ports:
+            - containerPort: 80
+          resources: {}
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: PROJECT_NAME
+              value: {{ .Values.ceapi.project_name }}
+            - name: SERVER_NAME
+              value: {{ .Values.ceapi.server_name }}
+            - name: SERVER_HOST
+              value: {{ .Values.ceapi.server_host }}
+            - name: POSTGRES_SERVER
+              value: {{ .Values.ceapi.postgres_server }}
+            - name: POSTGRES_USER
+              value: {{ .Values.ceapi.postgres_user }}
+            - name: POSTGRES_PASSWORD
+              value: {{ .Values.ceapi.postgres_password }}
+            - name: POSTGRES_DB
+              value: {{ .Values.ceapi.postgres_db }}
+            - name: JWT_SECRET_KEY
+              value: "{{ .Values.ceapi.jwt_secret_key }}"
+            - name: JWT_ALGORITHM
+              value: {{ .Values.ceapi.jwt_algorithm }}
+            - name: JWT_ACCESS_TOKEN_EXPIRE_MINUTES
+              value: "{{ .Values.ceapi.jwt_access_token_expire_minutes }}"
+      hostname: ceapi
+      restartPolicy: Always
+      serviceAccountName: {{ .Values.ceapi.serviceaccount }}

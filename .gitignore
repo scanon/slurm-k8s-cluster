@@ -1,3 +1,5 @@
 # Build artifacts from local helm install
 slurm-cluster-chart/Chart.lock
 slurm-cluster-chart/charts/
+.DS_Store
+

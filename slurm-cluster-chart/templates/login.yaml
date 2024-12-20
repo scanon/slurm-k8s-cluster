@@ -58,7 +58,9 @@ spec:
               subPath: ood-cluster-config.yml
             - name: host-keys
               mountPath: /tempmounts/etc/ssh
-          resources: {}
+          resources:
+            limits:
+              nextflow.io/fuse: 1
       hostname: login
       dnsConfig:
         searches:

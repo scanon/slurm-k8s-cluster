@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app.kubernetes.io/name: slurm
+    app.kubernetes.io/component: minterd
+  name: minter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: slurm
+      app.kubernetes.io/component: minterd
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app.kubernetes.io/name: slurm
+        app.kubernetes.io/component: minterd
+    spec:
+      containers:
+        - image: {{ .Values.minter.image }}
+          name: minter
+          ports:
+            - containerPort: 80
+          resources: {}
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - mountPath: /tmp/munge.key
+              name: munge-key-secret
+              subPath: munge.key
+      hostname: minterd
+      restartPolicy: Always
+      serviceAccountName: {{ .Values.minter.serviceaccount }}
+      volumes:
+        - name: munge-key-secret
+          secret:
+            secretName: {{ .Values.secrets.mungeKey }}
+            defaultMode: 0400

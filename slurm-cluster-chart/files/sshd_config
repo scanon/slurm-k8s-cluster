@@ -2,3 +2,6 @@ PasswordAuthentication no
 ChallengeResponseAuthentication no
 ClientAliveInterval 40
 ClientAliveCountMax 14
+AcceptEnv CE_SESSION
+Match User rocky
+	ForceCommand /home/rocky/connect

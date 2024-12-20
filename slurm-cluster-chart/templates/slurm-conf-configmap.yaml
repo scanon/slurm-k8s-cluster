@@ -6,4 +6,5 @@ metadata:
 data:
   cgroup.conf: {{ .Files.Get "files/cgroup.conf" | quote}}
   slurm.conf: {{ .Files.Get "files/slurm.conf" | quote}}
+  oci.conf: {{ .Files.Get "files/oci.conf" | quote}}
 
